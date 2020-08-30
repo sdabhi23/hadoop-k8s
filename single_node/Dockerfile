@@ -6,4 +6,4 @@ WORKDIR /setup
 
 RUN "/setup/install.sh"
 
-CMD [ "/bin/bash" ]
+CMD "/setup/run.sh"
