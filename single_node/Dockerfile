@@ -6,6 +6,6 @@ COPY . /setup
 
 WORKDIR /setup
 
-RUN /setup/install.sh $env
+RUN chmod +x /setup/*.sh && /setup/install.sh $env
 
 CMD "/setup/run.sh"
