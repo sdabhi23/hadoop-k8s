@@ -21,6 +21,6 @@ jobs:
           repository: sdabhi23/hadoop-k8s
           path: ./single_node/
           tags: single-node
-          build-args: env=prod
+          build_args: env=prod
           add_git_labels: true
           push: true
