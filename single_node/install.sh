@@ -14,11 +14,11 @@ apt-get -qq install -y ssh pdsh wget > /dev/null
 echo "${C}===================> retrieve and unpack hadoop <===================${NC}"
 if [ $mode = "prod" ]
 then
-    wget https://downloads.apache.org/hadoop/common/hadoop-${version}/hadoop-${version}.tar.gz
+    wget "https://downloads.apache.org/hadoop/common/hadoop-${version}/hadoop-${version}.tar.gz"
 fi
-tar xzf hadoop-${version}.tar.gz
-rm -rf hadoop-${version}.tar.gz
+tar xzf "hadoop-${version}.tar.gz"
+rm -rf "hadoop-${version}.tar.gz"
 
 echo "${C}===================> apply settings for single node cluster <===================${NC}"
-cp ./config/etc/hadoop/* ./hadoop-${version}/etc/hadoop/
-cp ./config/sbin/* ./hadoop-${version}/sbin/
+cp ./config/etc/hadoop/* "./hadoop-${version}/etc/hadoop/"
+cp ./config/sbin/* "./hadoop-${version}/sbin/"
