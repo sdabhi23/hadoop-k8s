@@ -3,24 +3,41 @@ name: Publish Image
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags: [ v* ]
+
+env:
+  IMAGE_NAME: hadoop-single-node
 
 jobs:
   push:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        hadoop_version: [3.3.0, 2.10.0]
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: sdabhi23
-          password: ${{ secrets.GITHUB_TOKEN }}
-          repository: sdabhi23/hadoop-k8s
-          path: ./single_node/
-          tags: single-node
-          build_args: env=prod
-          add_git_labels: true
-          push: true
+
+      - name: Push image for Hadoop v${{ hadoop_version }}
+        run: |
+          # build image
+          docker build ./single_node/ \
+          --build-arg build_date="$(date -u +'%Y-%m-%d')" \
+          --build-arg HADOOP_VERSION=${{ hadoop_version }}
+          --build-arg TYPE=prod
+          -t $IMAGE_NAME
+
+          # registry login
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=${{ hadoop_version }}
+
+          docker tag $IMAGE_NAME $IMAGE_ID:${{ hadoop_version }}
+          docker push $IMAGE_ID:${{ hadoop_version }}
