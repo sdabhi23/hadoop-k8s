@@ -9,7 +9,7 @@ Hadoop v3.3.0 deployment on kubernetes
 * Local environment:
 
     ```bash
-    ➜ docker build -t hadoop:single-node .
+    ➜ docker build --build-arg TYPE=dev --build-arg HADOOP_VERSION='3.3.0' -t hadoop:single-node .
     ```
 
 * Build systems:
@@ -20,6 +20,8 @@ Hadoop v3.3.0 deployment on kubernetes
 
 ### Run container
 
-```bash
-➜ docker run -t --rm -p 9870:9870 -p 8088:8088 -d hadoop:single-node
-```
+* Local environment:
+
+    ```bash
+    ➜ docker run -p 9870:9870 -p 8088:8088 -d hadoop:single-node
+    ```
