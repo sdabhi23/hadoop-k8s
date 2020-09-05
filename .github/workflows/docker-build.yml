@@ -24,8 +24,8 @@ jobs:
           # build image
           docker build ./single_node/ \
           --build-arg build_date="$(date -u +'%Y-%m-%d')" \
-          --build-arg HADOOP_VERSION=${{ matrix.hadoop_version }}
-          --build-arg TYPE=prod
+          --build-arg HADOOP_VERSION=${{ matrix.hadoop_version }} \
+          --build-arg TYPE=prod \
           -t $IMAGE_NAME
 
           # registry login
