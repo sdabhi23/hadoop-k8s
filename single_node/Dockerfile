@@ -27,3 +27,5 @@ RUN /setup/install.sh $TYPE $HADOOP_VERSION
 # -- Runtime
 
 CMD /setup/run.sh $HADOOP_VERSION
+
+CMD /setup/run.sh
