@@ -6,7 +6,7 @@ LABEL maintainer="Shrey Dabhi <shrey.dabhi23@gmail.com>"
 ARG build_date
 
 LABEL org.label-schema.build-date="$build_date"
-LABEL org.label-schema.name="Apache Hadoop Cluster"
+LABEL org.label-schema.name="Apache Hadoop Pseudo-Distributed Cluster"
 LABEL org.label-schema.description="Hadoop single node image"
 LABEL org.label-schema.url="https://github.com/sdabhi23/hadoop-k8s"
 LABEL org.label-schema.schema-version="1.0"
@@ -26,6 +26,6 @@ RUN /setup/install.sh $TYPE $HADOOP_VERSION
 
 # -- Runtime
 
-CMD /setup/run.sh $HADOOP_VERSION
+EXPOSE 8088 9870
 
 CMD /setup/run.sh
