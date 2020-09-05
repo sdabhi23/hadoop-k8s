@@ -22,8 +22,8 @@ WORKDIR /setup
 
 RUN chmod +x /setup/*.sh
 
-RUN ["/setup/install.sh", "$TYPE", "$HADOOP_VERSION"]
+RUN /setup/install.sh $TYPE $HADOOP_VERSION
 
 # -- Runtime
 
-CMD ["/setup/run.sh", "$HADOOP_VERSION"]
+CMD /setup/run.sh $HADOOP_VERSION
