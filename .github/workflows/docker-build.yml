@@ -20,24 +20,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Push image for Hadoop v${{ matrix.hadoop_version }}
-        run: |
-          # build image
-          docker build ./single_node/ \
-          --build-arg build_date="$(date -u +'%Y-%m-%d')" \
-          --build-arg HADOOP_VERSION=${{ matrix.hadoop_version }} \
-          --build-arg TYPE=prod \
-          -t $IMAGE_NAME
-
-          # registry login
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=${{ matrix.hadoop_version }}
-
-          docker tag $IMAGE_NAME $IMAGE_ID:${{ matrix.hadoop_version }}
-          docker push $IMAGE_ID:${{ matrix.hadoop_version }}
+        uses: docker/build-push-action@v1
+        with:
+          path: ./single_node/
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: sdabhi23/hadoop-${{ matrix.hadoop_version }}
+          tag_with_sha: true
+          add_git_labels: true
+          build_args: TYPE=prod,HADOOP_VERSION=${{ matrix.hadoop_version }}
+          tags: latest,single-node
+          push: true
