@@ -46,16 +46,17 @@ jobs:
       - name: Build and push image for Hadoop v${{ matrix.hadoop_version }}
         uses: docker/build-push-action@v2
         with:
-          path: ./single_node/
-          repository: sdabhi23/hadoop-single-node
+          context: ./single_node/
+          file: ./single_node/Dockerfile
           labels: |
             org.opencontainers.image.source="https://github.com/sdabhi23/hadoop-k8s"
             org.opencontainers.image.revision="${{ github.sha }}"
             org.opencontainers.image.created="${{ steps.labels.outputs.timestamp }}"
-          build_args: |
+          build-args: |
             TYPE=prod
             HADOOP_VERSION=${{ matrix.hadoop_version }}
-          tags: ${{ matrix.hadoop_version }}
+          tags: |
+            sdabhi23/hadoop-single-node:${{ matrix.hadoop_version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           push: true
