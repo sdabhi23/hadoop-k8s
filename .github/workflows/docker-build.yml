@@ -25,9 +25,8 @@ jobs:
           path: ./single_node/
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: sdabhi23/hadoop-${{ matrix.hadoop_version }}
-          tag_with_sha: true
+          repository: sdabhi23/hadoop-single-node
           add_git_labels: true
           build_args: TYPE=prod,HADOOP_VERSION=${{ matrix.hadoop_version }}
-          tags: latest,single-node
+          tags: ${{ matrix.hadoop_version }}
           push: true
