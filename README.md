@@ -9,13 +9,15 @@ Hadoop v3.3.0 deployment on kubernetes
 * Local environment:
 
     ```bash
-    ➜ docker build --build-arg TYPE=dev --build-arg HADOOP_VERSION='x.y.z' -t hadoop:single-node .
+    ➜ cd single_node
+    ➜ docker build --build-arg TYPE=dev --build-arg HADOOP_VERSION='x.y.z' -t hadoop-single-node:latest .
     ```
 
 * Build systems:
 
     ```bash
-    ➜ docker build --build-arg ENV=prod -t hadoop:single-node .
+    ➜ cd single_node
+    ➜ docker build --build-arg ENV=prod --build-arg HADOOP_VERSION='x.y.z' -t hadoop-single-node:x.y.z .
     ```
 
 ### Run container
@@ -23,11 +25,11 @@ Hadoop v3.3.0 deployment on kubernetes
 * Local image:
 
     ```bash
-    ➜ docker run -p 9870:9870 -p 8088:8088 -d hadoop:single-node
+    ➜ docker run -p 9870:9870 -p 8088:8088 -d hadoop-single-node:latest
     ```
 
 * Image from Docker Hub:
 
     ```bash
-    ➜ docker run -p 9870:9870 -p 8088:8088 -d hadoop-x.y.z:single-node
+    ➜ docker run -p 9870:9870 -p 8088:8088 -d hadoop-single-node:x.y.z
     ```
