@@ -15,8 +15,13 @@ cd hadoop
 echo "${C}===================> format the filesystem <===================${NC}"
 bin/hdfs namenode -format
 
-echo "${C}===================> starting all daemons <===================${NC}"
-sbin/start-all.sh
+echo "${C}===================> starting dfs daemons <===================${NC}"
+sbin/start-dfs.sh
+sleep 10
+
+echo "${C}===================> starting yarn daemons <===================${NC}"
+sbin/start-yarn.sh
+sleep 10
 
 while true
 do
