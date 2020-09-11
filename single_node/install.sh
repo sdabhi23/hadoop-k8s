@@ -19,10 +19,6 @@ fi
 tar xzf "hadoop-${version}.tar.gz"
 rm -rf "hadoop-${version}.tar.gz"
 mv "hadoop-${version}/" "hadoop"
-echo "~/"
-ls
-echo "hadoop/"
-ls hadoop
 
 echo "${C}===================> apply settings for single node cluster <===================${NC}"
 cp ./config/etc/hadoop/* ./hadoop/etc/hadoop/
